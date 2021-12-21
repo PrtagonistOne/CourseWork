@@ -49,8 +49,7 @@ while True:
     if keypress == ord('l'):
         # Навчання нейроної мережі
         data = data1()
-        # print(corrRes)
-        Per = Perceptron(NEURONS_AMOUNT, 0.4, data, corrRes, dim)
+        Per = Perceptron(NEURONS_AMOUNT, 0.45, data, corrRes, dim)
         Per.learn(EPOCHS)
     if keypress == ord('1'):
         (width, height) = dim

@@ -7,7 +7,6 @@ from constants.photo_constants import SAMPLE_AMOUNT, SCALE_PERCENT
 
 def main():
     np.set_printoptions(threshold=sys.maxsize)
-    print(os.getcwd())
     os.chdir('1Finger')
     _, dim = resize_image(SCALE_PERCENT, 'ThumbOpened_' + str(1) + '.jpg')
 
@@ -80,6 +79,7 @@ def main():
             if c_counter > 49:
                 # print(data1)
                 break
+    os.chdir('..')
     return data1
 
 

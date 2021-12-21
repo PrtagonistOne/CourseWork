@@ -53,10 +53,12 @@ class Perceptron:
         self.corrRes = corr_res
         self.dim = dim
         self.amount = amount
-        for i in range(10):
+        for _ in range(10):
             self.Output.append(NeuronsOutput(self.amount, speed))
         for _ in range(self.amount):
             self.HiddenNeurons.append(NeuronsHidden(speed, dim))
+        self.HiddenNeurons = np.load("hidden_weights.npy", allow_pickle=True)
+        self.Output = np.load("output_weights.npy", allow_pickle=True)
 
     def check(self, input_data):
         results = np.zeros(self.amount, dtype=float)
@@ -70,30 +72,30 @@ class Perceptron:
         return final_res
 
     def learn(self, epoch):
-        z, y, x = self.data.shape
-        while epoch != 0:
-            for k in range(z):
-                hid_res = np.zeros(z, dtype=float)
-                out_res = np.zeros(10, dtype=float)
-                out_delta = np.zeros(10, dtype=float)
-                for i in range(len(self.HiddenNeurons)):
-                    hid_res[i] = self.HiddenNeurons[i].activate(self.data[k])
-
-                for i in range(len(self.Output)):
-                    out_res[i] = self.Output[i].activate_out(hid_res)
-
-                for i in range(len(self.Output)):
-                    out_delta[i] = out_res[i] * (1 - out_res[i]) * (self.corrRes[i][k] - out_res[i])
-                    self.Output[i].weights_adjustment_out(out_delta[i], hid_res)
-
-                for i in range(len(self.HiddenNeurons)):
-                    hid_delta = sum(
-                        out_delta[j] * self.Output[j].weights[i]
-                        for j in range(len(self.Output))
-                    )
-
-                    hid_error = hid_res[i] * (1 - hid_res[i]) * hid_delta
-                    self.HiddenNeurons[i].weights_adjustment(hid_error, self.data[k])
-
-            print("Epoch#", epoch)
-            epoch -= 1
+        # z, y, x = self.data.shape
+        # while epoch != 0:
+        #     for k in range(z):
+        #         hid_res = np.zeros(z, dtype=float)
+        #         out_res = np.zeros(10, dtype=float)
+        #         out_delta = np.zeros(10, dtype=float)
+        #         for i in range(len(self.HiddenNeurons)):
+        #             hid_res[i] = self.HiddenNeurons[i].activate(self.data[k])
+        #
+        #         for i in range(len(self.Output)):
+        #             out_res[i] = self.Output[i].activate_out(hid_res)
+        #
+        #         for i in range(len(self.Output)):
+        #             out_delta[i] = out_res[i] * (1 - out_res[i]) * (self.corrRes[i][k] - out_res[i])
+        #             self.Output[i].weights_adjustment_out(out_delta[i], hid_res)
+        #
+        #         for i in range(len(self.HiddenNeurons)):
+        #             hid_delta = sum(
+        #                 out_delta[j] * self.Output[j].weights[i]
+        #                 for j in range(len(self.Output))
+        #             )
+        #
+        #             hid_error = hid_res[i] * (1 - hid_res[i]) * hid_delta
+        #             self.HiddenNeurons[i].weights_adjustment(hid_error, self.data[k])
+        print('Used previous learn data')
+            # print("Epoch#", epoch)
+            # epoch -= 1
